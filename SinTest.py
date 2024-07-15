@@ -25,7 +25,7 @@ def sin(angle):
 def cos(angle):
 	return math.cos(math.radians(angle))
 	
-class player(object):
+class tank(object):
 	def __init__(self, startX, startY, angle):
 		self.x = startX
 		self.y = startY
@@ -73,12 +73,12 @@ class projectile(object):
 
 gameExit = False
 
-tank = player(50, 50, 0)
+player = tank(50, 50, 0)
 bullets = []
 
 def drawFrame():
 	window.fill(white)
-	tank.draw(window)
+	player.draw(window)
 	
 	for bullet in bullets:
 		bullet.draw(window)
@@ -93,38 +93,38 @@ while not gameExit:
 			
 		elif event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_LEFT:
-				tank.turningCClockwise = True
+				player.turningCClockwise = True
 			elif event.key == pygame.K_RIGHT:
-				tank.turningClockwise = True
+				player.turningClockwise = True
 			elif event.key == pygame.K_UP:
-				tank.moving = True
+				player.moving = True
 			elif event.key == pygame.K_z:
-				bulletAngle = tank.angle
-				bullets.append(projectile(tank.x, tank.y, tank.angle, 2, red))
+				bulletAngle = player.angle
+				bullets.append(projectile(player.x, player.y, player.angle, 2, red))
 			elif event.key == pygame.K_LSHIFT:	
-				tank.x += 30 * cos(tank.angle)
-				tank.y += 30 * sin(tank.angle)
+				player.x += 30 * cos(player.angle)
+				player.y += 30 * sin(player.angle)
 		elif event.type == pygame.KEYUP:
 			if event.key == pygame.K_LEFT:
-				tank.turningCClockwise = False
+				player.turningCClockwise = False
 			elif event.key == pygame.K_RIGHT:
-				tank.turningClockwise = False
-			elif event.key == pygame.K_UP and tank.moving: 
-				tank.moving = False
+				player.turningClockwise = False
+			elif event.key == pygame.K_UP and player.moving: 
+				player.moving = False
 				
-	if tank.moving:
-		tank.x += 1 * cos(tank.angle)
-		tank.y += 1 * sin(tank.angle)
+	if player.moving:
+		player.x += 1 * cos(player.angle)
+		player.y += 1 * sin(player.angle)
 		
-	if tank.turningClockwise:
-		tank.angle += 2.5
-		if tank.angle == 360:
-			tank.angle = 0
+	if player.turningClockwise:
+		player.angle += 2.5
+		if player.angle == 360:
+			player.angle = 0
 		
-	if tank.turningCClockwise:
-		tank.angle -= 2.5
-		if tank.angle < 0:
-			tank.angle += 360
+	if player.turningCClockwise:
+		player.angle -= 2.5
+		if player.angle < 0:
+			player.angle += 360
 		
 	for bullet in bullets:
 		if bullet.x >= 0 and bullet.x <= displayWidth and bullet.y >= 0 and bullet.y <= displayHeight:
